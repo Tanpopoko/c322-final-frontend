@@ -1,0 +1,26 @@
+.pink {
+    background-color: darksalmon;
+    padding: 2px 16px;
+    height: 200px;
+    margin: 25px 50px 25px 50px;
+}
+
+.options {
+    padding: 2px 16px;
+    margin: 00px 50px 00px 50px;
+}
+
+.content-left {
+    float: left;
+}
+
+.content-right {
+    float: right;
+}
+
+.flower-image {
+    width: 400px;
+    height: 200px;
+    float: right;
+    object-fit: cover;
+}

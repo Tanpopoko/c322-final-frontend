@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="navbar.css">
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+<ul class="topnav">
+    <li><a class="active" href="index.html">Home</a></li>
+    <li class="right"><a href="track-order.html">Track Order</a></li>
+    <li class="right"><a href="help.html">Help</a></li>
+    <li class="right"><a href="login.html">Login</a></li>
+    <li class="right"><a href="basket.html">Basket</a></li>
+</ul>
+<div class="pink" >
+    <div class="content-left">
+        <h1>Send Her Blooms</h1>
+        <p>She will love! Shop all Mother's Day Options</p>
+    </div>
+    <div class="flower-image">
+        <img src="flowers.jpg">
+    </div>
+</div>
+<div class="options">
+    <div class="content-left">
+        <label for="type">FILTER BY </label>
+        <select name="type" id="type">
+            <option value="mixedTypes">mixed</option>
+            <option value="roses">roses</option>
+            <option value="lilies">lilies</option>
+            <option value="tulips">tulips</option>
+            <option value="dasies">dasies</option>
+        </select>
+        <select name="occasion" id="occasion">
+            <option value="mothersDay">Mother's Day</option>
+            <option value="birthday">birthday</option>
+            <option value="thankYou">thank you</option>
+        </select>
+        <select name="colors" id="colors">
+            <option value="mixedColors">mixed</option>
+            <option value="red">red</option>
+            <option value="yellow">yellow</option>
+            <option value="green">green</option>
+            <option value="orange">orange</option>
+        </select>
+    </div>
+    <div class="content-right">
+        <label for="cost">SORT </label>
+        <select name="cost" id="cost">
+            <option value="highToLow">High to Low</option>
+            <option value="lowToHigh">Low to High</option>
+        </select>
+    </div>
+</div>
+
+<script>
+    let host = "http://localhost:8080";
+    let flowers = [];
+    let list = document.getElementById("list");
+    let card = document.getElementById("card");
+
+    displayTheFlowers();
+
+    async function getAll() {
+        let response = await fetch(host + "/flowers");
+        let result = await response.json();
+        return result;
+    }
+
+    async function displayTheFlowers() {
+        if (flowers.length == 0) {
+            flowers = await getAll();
+        }
+        list.innerHTML = "";
+        for (let flower of flowers) {
+            let div = document.createElement("div");
+            div.id = `${flower.id}`;
+            div.onclick = function () {window.location.href = "add-to-basket.html"};
+            div.className = "card";
+            let innerHtml = `
+      <img src="http://localhost:8080/flowers/${flower.id}/image" alt="flower" style="width:100%">
+      <div class="container">
+        <p>${flower.description}</p>
+      </div>
+          `;
+            div.innerHTML = innerHtml;
+            list.appendChild(div);
+        }
+    }
+</script>
+<script src="configuration.js"></script>
+</body>
+</html>
